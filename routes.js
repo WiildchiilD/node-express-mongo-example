@@ -4,11 +4,19 @@ const router = express.Router();
 const User = require('./Controllers/UserController');
 const Bracelet = require('./Controllers/BraceletController');
 
-router.get('/',(req,res)=>res.send('ok'));
+router.get('/',(req,res)=>res.send(
+    'Bracelet Server is Set : { Available entry point : \n ' +
+    'POST : /user/create \n' +
+    'POST : /user/find \n' +
+    'POST : /user/find/bracelet/:id \n' +
+    'POST : /bracelet/create/:id \n' +
+    'POST : /bracelet/populate/:id \n' +
+    ''
+));
 // user routes
 router.post('/user/create',User.create);
 router.post('/user/find',User.find);
-router.post('/user/find/post/:id', User.braceletsByUser);
+router.post('/user/find/bracelet/:id', User.braceletsByUser);
 // post routes
 router.post('/bracelet/create/:id', Bracelet.create);
 router.post('/bracelet/populate/:id',Bracelet.userByBracelet);
