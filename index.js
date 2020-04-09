@@ -9,7 +9,7 @@ app.use(cors());
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 
-const uri = "mongodb+srv://root:<password>@braceletcluster-7uu7g.mongodb.net/test?retryWrites=true&w=majority";
+const uri = "mongodb+srv://root:root@braceletcluster-7uu7g.mongodb.net/test?retryWrites=true&w=majority";
 
 mongoose.connect(uri,{
   useNewUrlParser: true,
