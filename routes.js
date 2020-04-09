@@ -1,59 +1,16 @@
-const express = require('express')
-const Joi = require('@hapi/joi')
-const { insertItem, getItems, updateQuantity } = require('./db')
+const express = require('express');
+const router = express.Router();
 
-const router = express.Router()
+const User = require('./Controllers/UserController');
+const Bracelet = require('./Controllers/BraceletController');
 
-const itemSchema = Joi.object().keys({
-  name: Joi.string(),
-  quantity: Joi.number().integer().min(0)
-})
+router.get('/',(req,res)=>res.send('ok'));
+// user routes
+router.post('/user/create',User.create);
+router.post('/user/find',User.find);
+router.post('/user/find/post/:id', User.braceletsByUser);
+// post routes
+router.post('/bracelet/create/:id', Bracelet.create);
+router.post('/bracelet/populate/:id',Bracelet.userByBracelet);
 
-router.post('/item', (req, res) => {
-  const item = req.body
-  console.log(req.body)
-  const result = itemSchema.validate(item)
-  if (result.error) {
-    console.log(result.error)
-    res.status(400).end()
-    return
-  }
-  insertItem(item)
-    .then(() => {
-      res.status(200).end()
-    })
-    .catch((err) => {
-      console.log(err)
-      res.status(500).end()
-    })
-})
-
-router.get('/items', (req, res) => {
-  getItems()
-    .then((items) => {
-      items = items.map((item) => ({
-        id: item._id,
-        name: item.name,
-        quantity: item.quantity
-      }))
-      res.json(items)
-    })
-    .catch((err) => {
-      console.log(err)
-      res.status(500).end()
-    })
-})
-
-router.put('/item/:id/quantity/:quantity', (req, res) => {
-  const { id, quantity } = req.params
-  updateQuantity(id, parseInt(quantity))
-    .then(() => {
-      res.status(200).end()
-    })
-    .catch((err) => {
-      console.log(err)
-      res.status(500).end()
-    })
-})
-
-module.exports = router
+module.exports = router;

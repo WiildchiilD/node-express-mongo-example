@@ -1,13 +1,22 @@
-const express = require('express')
-const bodyParser = require('body-parser')
-const { init } = require('./db')
-const routes = require('./routes')
+const express = require('express');
+const cors = require('cors');
+const mongoose = require('mongoose');
+const bodyParser = require('body-parser');
+const app = express();
 
-const app = express()
-app.use(bodyParser.json())
-app.use(routes)
+// middlewares
+app.use(cors());
+app.use(bodyParser.urlencoded({ extended: false }));
+app.use(bodyParser.json());
 
-init().then(() => {
-  console.log('starting server on port 3000')
-  app.listen(3000)
-})
+const uri = "mongodb+srv://root:<password>@braceletcluster-7uu7g.mongodb.net/test?retryWrites=true&w=majority";
+
+mongoose.connect(uri,{
+  useNewUrlParser: true,
+  useUnifiedTopology: true
+});
+
+// routes
+app.use(require('./routes'));
+
+app.listen(3000, () => console.log('server on!'));

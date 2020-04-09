@@ -1,14 +1,25 @@
 const Bracelet = require('../Models/Bracelet');
+const User = require('../Models/User');
 
 module.exports = {
     create: async (req, res) => {
-        const {couleur, version} = req.body;
+        console.log(req.params);
+        user = req.params;
+        id = user.id;
+        const { couleur, version} = req.body;
         const bracelet = await Bracelet.create({
             couleur,
             version,
-        })
+            user:id
+        });
+        await bracelet.save();
 
-        return res.send(bracelet)
+        const userById = await User.findById(id);
+
+        userById.bracelets.push(bracelet);
+        await userById.save();
+
+        return res.send(userById);
     },
 
     find: async (req, res) => {
@@ -19,7 +30,7 @@ module.exports = {
     userByBracelet: async (req, res) => {
         const {id} = req.params;
         const bracelet = await Bracelet.findById(id).populate('User');
-        res.send(bracelet.user);
+        res.send(bracelet);
     }
 
 }
