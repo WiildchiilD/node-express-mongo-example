@@ -4,6 +4,8 @@ const mongoose = require('mongoose');
 const bodyParser = require('body-parser');
 const app = express();
 
+const PORT = process.env.PORT || 3000;
+
 // middlewares
 app.use(cors());
 app.use(bodyParser.urlencoded({ extended: false }));
@@ -19,4 +21,4 @@ mongoose.connect(uri,{
 // routes
 app.use(require('./routes'));
 
-app.listen(3000, () => console.log('server on!'));
+app.listen(PORT, () => console.log('server on!'));
