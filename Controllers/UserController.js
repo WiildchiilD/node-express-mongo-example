@@ -2,15 +2,24 @@ const User = require('../Models/User');
 
 module.exports = {
     create : async (req, res) =>{
-        const { type } = req.body;
+        const { type , firstname, lastname , email , password } = req.body;
         const user = await User.create({
-            type
-        })
+            type , firstname, lastname , email , password
+        }, function(error , user) {
+            if (error){
+                return res.send(error);
+            }
+            return res.send(user);
+        });
 
-        return res.send(user)
     },
 
     find : async (req, res) => {
+        const user = await User.find()
+        return res.send(user)
+    },
+
+    findAll : async (req, res) => {
         const user = await User.find()
         return res.send(user)
     },

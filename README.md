@@ -4,6 +4,7 @@ This is a sample application demonstrating how to build an Node.js express RESTf
 
 ## Running the application
 https://dev.to/mkilmer/how-create-relationships-with-mongoose-and-node-js-with-real-example-43ei
+
 1. Clone the repo
 2. Install dependencies: `npm install`
 3. Start your mongoDB instance. This repo works on an instance running on `localhost:27017`

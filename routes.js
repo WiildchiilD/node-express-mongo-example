@@ -17,6 +17,7 @@ router.get('/',(req,res)=>res.send(
 router.post('/user/create',User.create);
 router.post('/user/find',User.find);
 router.post('/user/find/bracelet/:id', User.braceletsByUser);
+router.get('/users', User.findAll)
 // post routes
 router.post('/bracelet/create/:id', Bracelet.create);
 router.post('/bracelet/populate/:id',Bracelet.userByBracelet);
