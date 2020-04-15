@@ -17,7 +17,11 @@ router.get('/',(req,res)=>res.send(
 router.post('/user/create',User.create);
 router.post('/user/find',User.find);
 router.post('/user/find/bracelet/:id', User.braceletsByUser);
-router.get('/users', User.findAll)
+router.get('/users', User.findAll);
+
+// Login operation
+router.post('/account/login',User.login);
+
 // bracelet routes
 router.get('/bracelets', Bracelet.findAll);
 router.post('/bracelet/create',Bracelet.create);
