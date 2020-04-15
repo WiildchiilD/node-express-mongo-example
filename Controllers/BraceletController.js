@@ -4,6 +4,21 @@ const User = require('../Models/User');
 module.exports = {
     create: async (req, res) => {
         console.log(req.params);
+        const { couleur, version} = req.body;
+        await Bracelet.create({
+            couleur,
+            version
+        }, function(error , bracelet) {
+            if (error){
+                return res.send(error);
+            }
+            return res.send(bracelet);
+        });
+
+    },
+
+    createWithUserID: async (req, res) => {
+        console.log(req.params);
         user = req.params;
         id = user.id;
         const { couleur, version} = req.body;
@@ -23,6 +38,11 @@ module.exports = {
     },
 
     find: async (req, res) => {
+        const bracelet = await Bracelet.find()
+        return res.send(bracelet)
+    },
+
+    findAll: async (req, res) => {
         const bracelet = await Bracelet.find()
         return res.send(bracelet)
     },

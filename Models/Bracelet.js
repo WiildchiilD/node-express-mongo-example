@@ -7,16 +7,16 @@ var Schema = mongoose.Schema;
 var Bracelet = new Schema({
     id_qr: mongoose.ObjectId,
     couleur: String,
-    version: String,
-    createdAt: {type: Date, default: Date.now()},
+    version: Number,
     user :{
         type:mongoose.Schema.Types.ObjectId,
         ref:'User'
     },
     histories: [{
-        type: mongoose.Schema.Types.ObjectId, ref: 'History'
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'History'
     }]
-});
+}, { timestamps: { createdAt: 'createdAt' } });
 
 
 module.exports = mongoose.model('Bracelet', Bracelet);

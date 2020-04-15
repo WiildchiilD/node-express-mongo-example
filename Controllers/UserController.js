@@ -3,7 +3,7 @@ const User = require('../Models/User');
 module.exports = {
     create : async (req, res) =>{
         const { type , firstname, lastname , email , password } = req.body;
-        const user = await User.create({
+        await User.create({
             type , firstname, lastname , email , password
         }, function(error , user) {
             if (error){

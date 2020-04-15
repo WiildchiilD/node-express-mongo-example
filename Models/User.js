@@ -39,10 +39,9 @@ var User = new Schema({
         minLength : 6
     },
     type: Boolean,
-    createdAt: {type: Date, default: Date.now()},
     bracelets: [{
         type: mongoose.Schema.Types.ObjectId, ref: 'Bracelet'
     }]
-});
+}, { timestamps: { createdAt: 'createdAt' } });
 
 module.exports = mongoose.model('User', User);

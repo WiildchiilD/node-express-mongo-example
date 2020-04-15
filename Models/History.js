@@ -9,6 +9,6 @@ var History = new Schema({
     longitude: String,
     latitude: String,
     createdAt: {type: Date, default: Date.now()},
-});
+}, { timestamps: { createdAt: 'createdAt' } });
 
 module.exports = mongoose.model('History', History);
