@@ -6,7 +6,11 @@ var Schema = mongoose.Schema;
 
 var Bracelet = new Schema({
     id: mongoose.ObjectId,
-    model : String,
+    model : {
+        type : String,
+        trim: true,
+        required: 'Model name is required',
+    },
     couleur: String,
     version: Number,
     user :{
