@@ -4,8 +4,9 @@ const User = require('../Models/User');
 module.exports = {
     create: async (req, res) => {
         console.log(req.params);
-        const { couleur, version} = req.body;
+        const { couleur, version, model} = req.body;
         await Bracelet.create({
+            model,
             couleur,
             version
         }, function(error , bracelet) {
