@@ -5,7 +5,7 @@ var mongoose = require('mongoose');
 var Schema = mongoose.Schema;
 
 var Bracelet = new Schema({
-    id_qr: mongoose.ObjectId,
+    id: mongoose.ObjectId,
     model : String,
     couleur: String,
     version: Number,

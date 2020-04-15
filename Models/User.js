@@ -10,7 +10,7 @@ var validateEmail = function(email) {
 };
 
 var User = new Schema({
-    id_qr: mongoose.ObjectId,
+    id: mongoose.ObjectId,
     firstname : {
         type: String,
         trim: true,

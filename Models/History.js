@@ -5,7 +5,7 @@ var mongoose = require('mongoose');
 var Schema = mongoose.Schema;
 
 var History = new Schema({
-    id_qr: mongoose.ObjectId,
+    id: mongoose.ObjectId,
     longitude: String,
     latitude: String,
     createdAt: {type: Date, default: Date.now()},

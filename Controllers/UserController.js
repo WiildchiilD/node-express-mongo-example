@@ -1,4 +1,5 @@
 const User = require('../Models/User');
+const Bracelet = require('../Models/Bracelet');
 
 module.exports = {
     create: async (req, res) => {
@@ -26,7 +27,7 @@ module.exports = {
 
     braceletsByUser: async (req, res) => {
         const {id} = req.params;
-        const user = await User.findById(id).populate('Bracelet');
+        const user = await User.findById(id).populate('bracelets');
 
         res.send(user.bracelets);
     },
