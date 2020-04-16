@@ -38,6 +38,11 @@ var User = new Schema({
         required: true,
         minLength : 6
     },
+
+    verified : {
+        type : Boolean,
+        default : false
+    },
     type: Boolean,
     bracelets: [{
         type: mongoose.Schema.Types.ObjectId, ref: 'Bracelet'

@@ -8,7 +8,17 @@ var History = new Schema({
     id: mongoose.ObjectId,
     longitude: String,
     latitude: String,
-    createdAt: {type: Date, default: Date.now()},
+    user :{
+        type:mongoose.Schema.Types.ObjectId,
+        ref:'User'
+        //,default : null
+    },
+
+    bracelet :{
+        type:mongoose.Schema.Types.ObjectId,
+        ref:'Bracelet'
+    },
+
 }, { timestamps: { createdAt: 'createdAt' } });
 
 module.exports = mongoose.model('History', History);

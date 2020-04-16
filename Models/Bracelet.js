@@ -16,11 +16,7 @@ var Bracelet = new Schema({
     user :{
         type:mongoose.Schema.Types.ObjectId,
         ref:'User'
-    },
-    histories: [{
-        type: mongoose.Schema.Types.ObjectId,
-        ref: 'History'
-    }]
+    }
 }, { timestamps: { createdAt: 'createdAt' } });
 
 

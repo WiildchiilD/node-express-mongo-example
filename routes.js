@@ -3,6 +3,7 @@ const router = express.Router();
 
 const User = require('./Controllers/UserController');
 const Bracelet = require('./Controllers/BraceletController');
+const History = require('./Controllers/HistoryController');
 
 router.get('/',(req,res)=>res.send(
     'Bracelet Server is Set : { Available entry point : \n ' +
@@ -28,5 +29,8 @@ router.post('/bracelet/create',Bracelet.create);
 router.post('/bracelet/create/:id', Bracelet.createWithUserID);
 router.post('/bracelet/populate/:id',Bracelet.userByBracelet);
 
+// History & Position manager
+
+router.post('/history/create/:id', History.create);
 
 module.exports = router;
