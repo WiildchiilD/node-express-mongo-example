@@ -2,8 +2,11 @@ const Bracelet = require('../Models/Bracelet');
 const User = require('../Models/User');
 const History = require('../Models/History');
 
+const openGeocoder = require('node-open-geocoder');
+
+
 module.exports = {
-    create: async (req, res) => {
+    create: async (req, response) => {
         id = req.params.id;
 
         const bracelet = await Bracelet.findById(id);
@@ -14,18 +17,26 @@ module.exports = {
         }
 
         const {longitude, latitude} = req.body;
+        var place = "";
 
-        var history = await History.create({
-            longitude: longitude,
-            latitude: latitude,
-            user: user === null ? undefined : user,
-            bracelet: id
-        });
+        openGeocoder()
+            .reverse(parseFloat(longitude), parseFloat(latitude))
+            .end((err, res) => {
+                //console.log(err);
+                if (err) {
 
-        await history.save();
+                }
+                console.log(res.display_name);
+                let history = History.create({
+                    longitude: longitude,
+                    latitude: latitude,
+                    user: user === null ? undefined : user,
+                    bracelet: id,
+                    place: res.display_name
+                });
 
-        return res.send(history);
-
+                response.send(history);
+            });
     },
 
     createWithUserID: async (req, res) => {
