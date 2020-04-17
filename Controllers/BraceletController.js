@@ -52,6 +52,12 @@ module.exports = {
         const {id} = req.params;
         const bracelet = await Bracelet.findById(id).populate('User');
         res.send(bracelet);
+    },
+
+    findByID: async (req, res) => {
+        const {id} = req.params;
+        const bracelet = await Bracelet.findById(id);
+        res.send(bracelet);
     }
 
 }

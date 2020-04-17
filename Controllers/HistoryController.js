@@ -81,7 +81,6 @@ module.exports = {
                 });
             });
 
-        console.log(bracelet);
         var owner = null;
         if (bracelet.user) {
             owner = bracelet.user;
@@ -92,28 +91,14 @@ module.exports = {
         await History.find({
             user: owner,
             bracelet: id
-        }).then(histories => {
-            res.send(histories);
-        }).catch(err => {
-            res.status(500).send({
-                message: err.message
+        }).sort([['createdAt', 'descending']])
+            .then(histories => {
+                res.send(histories);
+            }).catch(err => {
+                res.status(500).send({
+                    message: err.message
+                });
             });
-        });
-
-
-        /*
-        , function (error, resultSet) {
-            if (error) {
-                res.status(500).send(error);
-            } else {
-                if (resultSet.length > 0) {
-                    res.status(201).send(resultSet);
-                } else {
-                    res.status(404).send("[]");
-                }
-            }
-        })
-         */
     }
 
 }
