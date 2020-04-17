@@ -32,5 +32,6 @@ router.post('/bracelet/populate/:id',Bracelet.userByBracelet);
 // History & Position manager
 
 router.post('/history/create/:id', History.create);
-
+router.get('/history/find/:id',History.historyByBracelet);
+router.get('/histories',History.findAll);
 module.exports = router;

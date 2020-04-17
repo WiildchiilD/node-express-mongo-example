@@ -10,16 +10,16 @@ module.exports = {
         console.log(bracelet.user);
         var user = null;
         if (bracelet.user) {
-            user = await User.findById(bracelet.user.id);
+            user = bracelet.user;
         }
 
         const {longitude, latitude} = req.body;
 
-        var  history = await History.create({
-            longitude : longitude,
-            latitude : latitude,
-            user: user === null ? undefined : user.id,
-            bracelet:id
+        var history = await History.create({
+            longitude: longitude,
+            latitude: latitude,
+            user: user === null ? undefined : user,
+            bracelet: id
         });
 
         await history.save();
@@ -54,14 +54,55 @@ module.exports = {
     },
 
     findAll: async (req, res) => {
-        const bracelet = await Bracelet.find()
-        return res.send(bracelet)
+        const histories = await History.find()
+        return res.send(histories)
     },
 
-    userByBracelet: async (req, res) => {
-        const {id} = req.params;
-        const bracelet = await Bracelet.findById(id).populate('User');
-        res.send(bracelet);
+    historyByBracelet: async (req, res) => {
+        // return HISTORIES THAT CONTAIN THE USER
+        const {id} = req.params; // bracelet ID
+
+        const bracelet = await Bracelet
+            .findById(id)
+            .catch(err => {
+                res.status(500).send({
+                    message: err.message
+                });
+            });
+
+        console.log(bracelet);
+        var owner = null;
+        if (bracelet.user) {
+            owner = bracelet.user;
+        } else {
+            return res.status(404).send("[]");
+        }
+
+        await History.find({
+            user: owner,
+            bracelet: id
+        }).then(histories => {
+            res.send(histories);
+        }).catch(err => {
+            res.status(500).send({
+                message: err.message
+            });
+        });
+
+
+        /*
+        , function (error, resultSet) {
+            if (error) {
+                res.status(500).send(error);
+            } else {
+                if (resultSet.length > 0) {
+                    res.status(201).send(resultSet);
+                } else {
+                    res.status(404).send("[]");
+                }
+            }
+        })
+         */
     }
 
 }
