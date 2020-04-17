@@ -81,24 +81,29 @@ module.exports = {
                 });
             });
 
-        var owner = null;
-        if (bracelet.user) {
-            owner = bracelet.user;
+        if (bracelet) {
+
+            var owner = null;
+            if (bracelet.user) {
+                owner = bracelet.user;
+            } else {
+                return res.status(404).send("[]");
+            }
+
+            await History.find({
+                user: owner,
+                bracelet: id
+            }).sort([['createdAt', 'descending']])
+                .then(histories => {
+                    res.send(histories);
+                }).catch(err => {
+                    res.status(500).send({
+                        message: err.message
+                    });
+                });
         } else {
             return res.status(404).send("[]");
         }
-
-        await History.find({
-            user: owner,
-            bracelet: id
-        }).sort([['createdAt', 'descending']])
-            .then(histories => {
-                res.send(histories);
-            }).catch(err => {
-                res.status(500).send({
-                    message: err.message
-                });
-            });
     }
 
 }
