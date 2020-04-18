@@ -16,8 +16,12 @@ module.exports = {
     },
 
     find: async (req, res) => {
-        const user = await User.find()
-        return res.send(user)
+        const {id} = req.params;
+        await User.findById(id ).then(user => {
+            res.status(201).send(user);
+        }).catch(error => {
+            res.status(500).send(error);
+        })
     },
 
     findAll: async (req, res) => {
