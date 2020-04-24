@@ -17,7 +17,7 @@ module.exports = {
 
     find: async (req, res) => {
         const {id} = req.params;
-        await User.findById(id ).then(user => {
+        await User.findById(id).then(user => {
             res.status(201).send(user);
         }).catch(error => {
             res.status(500).send(error);
@@ -31,9 +31,17 @@ module.exports = {
 
     braceletsByUser: async (req, res) => {
         const {id} = req.params;
-        const user = await User.findById(id).populate('bracelets');
 
-        res.send(user.bracelets);
+        await Bracelet
+            .find({
+                user: id
+            }).then(bracelets => {
+                res.status(200).send(bracelets);
+            }).catch(error => {
+                res.status(200).json({});
+            });
+
+        // res.send(user.bracelets);
     },
 
     login: async (req, res) => {

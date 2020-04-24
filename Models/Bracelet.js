@@ -13,6 +13,7 @@ var Bracelet = new Schema({
     },
     couleur: String,
     version: Number,
+    url: String, // url Model and then use picasso
     user :{
         type:mongoose.Schema.Types.ObjectId,
         ref:'User'
