@@ -76,8 +76,12 @@ module.exports = {
         const bracelet = await Bracelet
             .findById(id)
             .catch(err => {
-                res.status(500).send({
-                    message: err.message
+                // res.status(500).send({
+                //     message: err.message
+                // });
+
+                res.status(500).json({
+                    "error": "Could not retrieve history"
                 });
             });
 

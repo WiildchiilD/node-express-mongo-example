@@ -57,8 +57,14 @@ module.exports = {
 
     findByID: async (req, res) => {
         const {id} = req.params;
-        const bracelet = await Bracelet.findById(id);
-        res.send(bracelet);
+        await Bracelet
+            .findById(id)
+            .then(bracelet => {
+                res.status(200)
+                    .send(bracelet);
+            }).catch(error => {
+                res.status(404).json({"error": "Bracelet not found"});
+            });
     },
 
     unpairdBraceletWithID: async (req, res) => {
@@ -108,7 +114,7 @@ module.exports = {
             }).catch(error => {
                 // bracelet does not exist
                 console.log(error);
-                console.log("CATCHING")
+                console.log("CATCHING");
                 res.status(404).json({"error": "Bracelet with given id not found"});
             });
     },

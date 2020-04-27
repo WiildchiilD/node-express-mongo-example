@@ -26,7 +26,7 @@ router.post('/account/login', User.login);
 
 // bracelet routes
 router.get('/bracelets', Bracelet.findAll);
-router.get('/bracelets/:id', Bracelet.findByID);
+router.get('/bracelet/:id', Bracelet.findByID);
 
 router.post('/bracelet/create', Bracelet.create);
 router.post('/bracelet/create/:id', Bracelet.createWithUserID);
