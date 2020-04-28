@@ -35,7 +35,10 @@ module.exports = {
         await Bracelet
             .find({
                 user: id
-            }).then(bracelets => {
+            }).populate('model')
+
+            .then(bracelets => {
+
                 res.status(200).send(bracelets);
             }).catch(error => {
                 res.status(200).json({});
