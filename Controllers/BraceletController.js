@@ -124,6 +124,9 @@ module.exports = {
             });
     },
 
+    /*
+    https://cloudinary.com/console/c-8ff6565030d2c3bb2a6b5d437ce87a
+     */
     // DO THROW ERROR
     createModel: async (req, res) => {
         console.log(req.body);
