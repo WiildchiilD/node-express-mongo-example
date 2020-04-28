@@ -43,6 +43,12 @@ router.get('/history/find/:id', History.historyByBracelet);
 router.get('/histories', History.findAll);
 
 
+// MODEL BRACLET
+
+router.post("/model/create", Bracelet.createModel);
+router.get("/models", Bracelet.findAllModels);
+
+
 // email test
 
 router.get('/test/email', Tools.sendEmail);

@@ -1,15 +1,17 @@
 const Bracelet = require('../Models/Bracelet');
+const BModel = require('../Models/BModel');
 const User = require('../Models/User');
 const Tools = require('./ToolsController');
 
 module.exports = {
     create: async (req, res) => {
-        console.log(req.params);
-        const {couleur, version, model} = req.body;
+        const {model} = req.body;
+
+        // look for the model
+        const modeli = await BModel.findById(model);
+
         await Bracelet.create({
-            model,
-            couleur,
-            version
+            model : model ,
         }, function (error, bracelet) {
             if (error) {
                 return res.send(error);
@@ -19,6 +21,7 @@ module.exports = {
 
     },
 
+    //@Deprecated
     createWithUserID: async (req, res) => {
         console.log(req.params);
         user = req.params;
@@ -40,18 +43,19 @@ module.exports = {
     },
 
     find: async (req, res) => {
-        const bracelet = await Bracelet.find()
+        const bracelet = await Bracelet.find().populate('model');
         return res.send(bracelet)
     },
 
     findAll: async (req, res) => {
-        const bracelet = await Bracelet.find()
+        const bracelet = await Bracelet.find().populate('model');
         return res.send(bracelet)
     },
 
     userByBracelet: async (req, res) => {
         const {id} = req.params;
-        const bracelet = await Bracelet.findById(id).populate('User');
+        const bracelet = await Bracelet.findById(id)
+            .populate('model user');
         res.send(bracelet);
     },
 
@@ -59,6 +63,7 @@ module.exports = {
         const {id} = req.params;
         await Bracelet
             .findById(id)
+            .populate('model')
             .then(bracelet => {
                 res.status(200)
                     .send(bracelet);
@@ -117,6 +122,37 @@ module.exports = {
                 console.log("CATCHING");
                 res.status(404).json({"error": "Bracelet with given id not found"});
             });
+    },
+
+    createModel: async (req, res) => {
+        console.log(req.body);
+        const {couleur, version, name} = req.body;
+        var url = "";
+        if (version === 1) {
+            url = __dirname + "/public/Assets/"+"v1.png";
+        } else if (version === 2) {
+            url = __dirname + "/public/Assets/"+"v2.png";
+        } else if (version === 3) {
+            url = __dirname + "/public/Assets/"+"v3.png";
+        } else if (version === 4) {
+            url = __dirname + "/public/Assets/"+"v4.png";
+        }
+
+        console.log(url);
+        const bmodel = await BModel.create({
+            name,
+            couleur,
+            version,
+            url
+        });
+
+        await bmodel.save();
+        return res.send(bmodel);
+    },
+
+    findAllModels : async (req, res) => {
+        const models = await BModel.find();
+        return res.send(models)
     },
 
 }

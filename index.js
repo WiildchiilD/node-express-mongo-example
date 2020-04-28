@@ -13,6 +13,8 @@ app.use(cors());
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 
+app.use(express.static(__dirname + '/public'));
+
 const uri = "mongodb+srv://root:root@braceletcluster-7uu7g.mongodb.net/test?retryWrites=true&w=majority";
 
 mongoose.connect(uri,{
@@ -23,4 +25,4 @@ mongoose.connect(uri,{
 // routes
 app.use(require('./routes'));
 
-app.listen(PORT, () => console.log('server on!'));
+app.listen(PORT, () => console.log("Server on!"));

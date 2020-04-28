@@ -7,18 +7,14 @@ var Schema = mongoose.Schema;
 var Bracelet = new Schema({
     id: mongoose.ObjectId,
     model : {
-        type : String,
-        trim: true,
-        required: 'Model name is required',
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'BModel'
     },
-    couleur: String,
-    version: Number,
-    url: String, // url Model and then use picasso
-    user :{
-        type:mongoose.Schema.Types.ObjectId,
-        ref:'User'
+    user: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'User'
     }
-}, { timestamps: { createdAt: 'createdAt' } });
+}, {timestamps: {createdAt: 'createdAt'}});
 
 
 module.exports = mongoose.model('Bracelet', Bracelet);
