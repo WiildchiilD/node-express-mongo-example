@@ -48,7 +48,7 @@ module.exports = {
     },
 
     findAll: async (req, res) => {
-        const bracelet = await Bracelet.find().populate('model');
+        const bracelet = await Bracelet.find().populate('model user');
         return res.send(bracelet)
     },
 
@@ -124,18 +124,19 @@ module.exports = {
             });
     },
 
+    // DO THROW ERROR
     createModel: async (req, res) => {
         console.log(req.body);
         const {couleur, version, name} = req.body;
         var url = "";
         if (version === 1) {
-            url = __dirname + "/public/Assets/"+"v1.png";
+            url = "https://res.cloudinary.com/braceletapp/image/upload/v1588061566/Models/v1_elsfbh.png";
         } else if (version === 2) {
-            url = __dirname + "/public/Assets/"+"v2.png";
+            url = "https://res.cloudinary.com/braceletapp/image/upload/v1588061566/Models/v4_vel7wg.png";
         } else if (version === 3) {
-            url = __dirname + "/public/Assets/"+"v3.png";
+            url = "https://res.cloudinary.com/braceletapp/image/upload/v1588061567/Models/v3_uqxnib.png";
         } else if (version === 4) {
-            url = __dirname + "/public/Assets/"+"v4.png";
+            url = "https://res.cloudinary.com/braceletapp/image/upload/v1588061566/Models/v4_vel7wg.png";
         }
 
         console.log(url);
