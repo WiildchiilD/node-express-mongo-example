@@ -152,10 +152,11 @@ module.exports = {
                 .then(history => {
                     // console.log(history._id);
                     console.log("pushing " + history);
-                    result.push(history);
+                    if (history != null)
+                        result.push(history);
                 }).catch(err => {
-                return undefined;
-            });
+                    return undefined;
+                });
 
 
             // let history = requestPositionByBracelet(doc._id)
