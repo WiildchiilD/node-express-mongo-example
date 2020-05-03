@@ -49,6 +49,12 @@ router.post("/model/create", Bracelet.createModel);
 router.get("/models", Bracelet.findAllModels);
 
 
+/************** ADMIN SPEC **************** */
+router.get("/bracelet/position/all", History.getAllLastPosition);
+
+router.get("")
+
+
 // email test
 
 router.get('/test/email', Tools.sendEmail);
