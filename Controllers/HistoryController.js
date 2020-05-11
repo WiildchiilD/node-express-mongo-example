@@ -112,8 +112,11 @@ module.exports = {
             await History.find({
                 user: owner,
                 bracelet: id
-            }).sort([['createdAt', 'descending']])
+            })
+                .select('longitude latitude place')
+                .sort([['createdAt', 'descending']])
                 .then(histories => {
+
                     res.send(histories);
                 }).catch(err => {
                     res.status(500).send({

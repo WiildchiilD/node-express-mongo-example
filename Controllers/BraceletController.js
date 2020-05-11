@@ -68,7 +68,7 @@ module.exports = {
                 res.status(200)
                     .send(bracelet);
             }).catch(error => {
-                res.status(404).json({"error": "Bracelet not found"});
+                res.status(200).json({"error": "Bracelet not found"});
             });
     },
 
@@ -82,7 +82,7 @@ module.exports = {
                 res.status(200).json({"success": "Unpair operation did finish with success"});
 
             }).catch(error => {
-                res.status(404).json({"error": "Bracelet not found"});
+                res.status(200).json({"error": "Bracelet not found"});
             })
 
     },
@@ -96,7 +96,7 @@ module.exports = {
                 // found bracelet
                 if (bracelet.user) { // bracelet have a user
                     // unauthorized op
-                    res.status(401).json({"error": "The bracelet is already paired"});
+                    res.status(200).json({"error": "The bracelet is already paired"});
                 } else {
                     // bracelet have no user so free to go
                     User.findById(userid)
@@ -112,7 +112,7 @@ module.exports = {
                                 {"success": "Operation did finish with success, an email with QR Code has been sent to your account"}
                             );
                         }).catch(error => {
-                        res.status(404).json({"error": "User not found"});
+                        res.status(200).json({"error": "User not found"});
                     })
 
                 }
@@ -120,7 +120,7 @@ module.exports = {
                 // bracelet does not exist
                 console.log(error);
                 console.log("CATCHING");
-                res.status(404).json({"error": "Bracelet with given id not found"});
+                res.status(200).json({"error": "Bracelet with given id not found"});
             });
     },
 
