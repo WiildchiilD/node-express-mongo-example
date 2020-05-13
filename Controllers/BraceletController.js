@@ -112,7 +112,7 @@ module.exports = {
                                 {"success": "Operation did finish with success, an email with QR Code has been sent to your account"}
                             );
                         }).catch(error => {
-                        res.status(200).json({"error": "User not found"});
+                        res.status(404).json({"error": "User not found"});
                     })
 
                 }
@@ -120,7 +120,7 @@ module.exports = {
                 // bracelet does not exist
                 console.log(error);
                 console.log("CATCHING");
-                res.status(200).json({"error": "Bracelet with given id not found"});
+                res.status(401).json({"error": "Bracelet with given id not found"});
             });
     },
 
