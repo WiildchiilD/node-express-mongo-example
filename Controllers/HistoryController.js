@@ -116,7 +116,6 @@ module.exports = {
                 .select('longitude latitude place')
                 .sort([['createdAt', 'descending']])
                 .then(histories => {
-
                     res.send(histories);
                 }).catch(err => {
                     res.status(500).send({
