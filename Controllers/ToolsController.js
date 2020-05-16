@@ -3,28 +3,34 @@ var hbs = require('nodemailer-express-handlebars');
 var gmailTransport = MailConfig.GmailTransport;
 
 module.exports = {
-    sendEmail: async (to) => {
+
+    sendEmail: async (req, res, respond = true) => {
+
+        console.log(req.body);
+        const { to, subject, content } = req.body;
+        //req.body.to,req.body.subject,req.body.content)
 
         MailConfig.ViewOption(gmailTransport, hbs);
         let HelperOptions = {
-            from: '"DER ELY" <lyesderouich@gmail.com>',
+            from: '"Admin" <lyesderouich@gmail.com>',
             to: to,
-            subject: 'New Bracelet Device paired with your account',
+            subject: subject,
             template: 'test',
             context: {
-                name: "tariqul_islam",
-                email: "tariqul.islam.rony@gmail.com",
-                address: "52, Kadamtola Shubag dhaka"
+                content: content
             }
         };
-        gmailTransport.sendMail(HelperOptions, (error,info) => {
-            if(error) {
-                console.log(error);
-                res.json(error);
+        gmailTransport.sendMail(HelperOptions, (error, info) => {
+            if (respond) {
+                if (error) {
+                    console.log(error);
+                    res.json(error);
+                } else {
+                    console.log("email is send");
+                    console.log(info);
+                    res.json(info)
+                }
             }
-            console.log("email is send");
-            console.log(info);
-            res.json(info)
         });
     }
 }

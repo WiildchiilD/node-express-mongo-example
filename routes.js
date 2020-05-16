@@ -57,6 +57,6 @@ router.get("")
 
 // email test
 
-router.get('/test/email', Tools.sendEmail);
+router.post('/admin/email', Tools.sendEmail);
 
 module.exports = router;

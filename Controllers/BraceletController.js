@@ -5,13 +5,13 @@ const Tools = require('./ToolsController');
 
 module.exports = {
     create: async (req, res) => {
-        const {model} = req.body;
+        const { model } = req.body;
 
         // look for the model
         const modeli = await BModel.findById(model);
 
         await Bracelet.create({
-            model : model ,
+            model: model,
         }, function (error, bracelet) {
             if (error) {
                 return res.send(error);
@@ -26,7 +26,7 @@ module.exports = {
         console.log(req.params);
         user = req.params;
         id = user.id;
-        const {couleur, version} = req.body;
+        const { couleur, version } = req.body;
         const bracelet = await Bracelet.create({
             couleur,
             version,
@@ -53,14 +53,14 @@ module.exports = {
     },
 
     userByBracelet: async (req, res) => {
-        const {id} = req.params;
+        const { id } = req.params;
         const bracelet = await Bracelet.findById(id)
             .populate('model user');
         res.send(bracelet);
     },
 
     findByID: async (req, res) => {
-        const {id} = req.params;
+        const { id } = req.params;
         await Bracelet
             .findById(id)
             .populate('model')
@@ -68,27 +68,27 @@ module.exports = {
                 res.status(200)
                     .send(bracelet);
             }).catch(error => {
-                res.status(200).json({"error": "Bracelet not found"});
+                res.status(200).json({ "error": "Bracelet not found" });
             });
     },
 
     unpairdBraceletWithID: async (req, res) => {
-        const {braceletid} = req.params;
+        const { braceletid } = req.params;
 
         await Bracelet.findById(braceletid)
             .then(bracelet => {
                 bracelet.user = undefined;
                 bracelet.save();
-                res.status(200).json({"success": "Unpair operation did finish with success"});
+                res.status(200).json({ "success": "Unpair operation did finish with success" });
 
             }).catch(error => {
-                res.status(200).json({"error": "Bracelet not found"});
+                res.status(200).json({ "error": "Bracelet not found" });
             })
 
     },
 
     affectBraceletToUser: async (req, res) => {
-        const {braceletid, userid} = req.params;
+        const { braceletid, userid } = req.params;
 
         // get bracelet by id
         await Bracelet.findById(braceletid)
@@ -96,7 +96,7 @@ module.exports = {
                 // found bracelet
                 if (bracelet.user) { // bracelet have a user
                     // unauthorized op
-                    res.status(200).json({"error": "The bracelet is already paired"});
+                    res.status(200).json({ "error": "The bracelet is already paired" });
                 } else {
                     // bracelet have no user so free to go
                     User.findById(userid)
@@ -104,23 +104,25 @@ module.exports = {
                             bracelet.user = user;
                             bracelet.save();
 
-                            console.log(user.email)
-                            // send email to user
-                            Tools.sendEmail(user.email);
+                            req.body.to = user.email;
+                            req.body.subject = "A new bracelet paired with your account"
+                            req.body.content = "Hello, you received automatically this email to confirm the new device pairing withou your account"
+
+                            Tools.sendEmail(req, res, false);
 
                             res.status(200).json(
-                                {"success": "Operation did finish with success, an email with QR Code has been sent to your account"}
+                                { "success": "Operation did finish with success, an email with QR Code has been sent to your account" }
                             );
                         }).catch(error => {
-                        res.status(404).json({"error": "User not found"});
-                    })
+                            res.status(404).json({ "error": "User not found" });
+                        })
 
                 }
             }).catch(error => {
                 // bracelet does not exist
                 console.log(error);
                 console.log("CATCHING");
-                res.status(401).json({"error": "Bracelet with given id not found"});
+                res.status(401).json({ "error": "Bracelet with given id not found" });
             });
     },
 
@@ -130,7 +132,7 @@ module.exports = {
     // DO THROW ERROR
     createModel: async (req, res) => {
         console.log(req.body);
-        const {couleur, version, name} = req.body;
+        const { couleur, version, name } = req.body;
         var url = "";
         if (version === 1) {
             url = "https://res.cloudinary.com/braceletapp/image/upload/v1588061566/Models/v1_elsfbh.png";
@@ -154,7 +156,7 @@ module.exports = {
         return res.send(bmodel);
     },
 
-    findAllModels : async (req, res) => {
+    findAllModels: async (req, res) => {
         const models = await BModel.find();
         return res.send(models)
     },
