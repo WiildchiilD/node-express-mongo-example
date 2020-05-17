@@ -113,7 +113,7 @@ module.exports = {
                 user: owner,
                 bracelet: id
             })
-                .select('id longitude latitude place createdAt@')
+                .select('id longitude latitude place createdAt')
                 .sort([['createdAt', 'descending']])
                 .then(histories => {
                     res.send(histories);
