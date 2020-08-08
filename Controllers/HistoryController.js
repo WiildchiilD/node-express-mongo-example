@@ -53,6 +53,43 @@ module.exports = {
                 response.send(history);
             });
     },
+    createByGet: async (req, response) => {
+        id = req.params.id;
+
+        longitude = req.params.long;
+        latitude = req.params.lat;
+
+        const bracelet = await Bracelet.findById(id);
+        console.log(bracelet.user);
+        var user = null;
+        if (bracelet.user) {
+            user = bracelet.user;
+        }
+
+        //const {longitude, latitude} = req.body;
+        var place = "";
+
+        openGeocoder()
+            .reverse(parseFloat(longitude), parseFloat(latitude))
+            .end(async (err, res) => {
+                //console.log(err);
+                var place = "Unkwnown";
+                if (err) {
+
+                }
+
+                place = res.display_name;
+                let history = await History.create({
+                    longitude: longitude,
+                    latitude: latitude,
+                    user: user === null ? undefined : user,
+                    bracelet: id,
+                    place: place
+                });
+                await history.save();
+                response.send(history);
+            });
+    },
 
     createWithUserID: async (req, res) => {
         console.log(req.params);

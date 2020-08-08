@@ -20,7 +20,7 @@ module.exports = {
                 content: content
             }
         };
-        gmailTransport.sendMail(HelperOptions, (error, info) => {
+        gmailTransport.sendMaijpg(HelperOptions, (error, info) => {
             if (respond) {
                 if (error) {
                     console.log(error);

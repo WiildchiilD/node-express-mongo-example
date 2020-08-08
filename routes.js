@@ -39,6 +39,7 @@ router.get('/bracelet/unpair/:braceletid', Bracelet.unpairdBraceletWithID);
 // History & Position manager
 
 router.post('/history/create/:id', History.create);
+router.get('/history/create/:id/:body', History.createByGet);
 router.get('/history/find/:id', History.historyByBracelet);
 router.get('/histories', History.findAll);
 
